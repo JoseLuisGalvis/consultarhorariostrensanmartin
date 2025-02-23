@@ -1,0 +1,26 @@
+{
+    "estaciones": [
+      {"id": 1, "nombre": "Retiro"},
+      {"id": 2, "nombre": "Palermo"},
+      {"id": 3, "nombre": "Villa_Crespo"},
+      {"id": 4, "nombre": "La_Paternal"},
+      {"id": 5, "nombre": "Villa_del_Parque"},
+      {"id": 6, "nombre": "Devoto"},
+      {"id": 7, "nombre": "Saenz_Peña"},
+      {"id": 8, "nombre": "Santos_Lugares"},
+      {"id": 9, "nombre": "Caseros"},
+      {"id": 10, "nombre": "El_Palomar"},
+      {"id": 11, "nombre": "Hurlingham"},
+      {"id": 12, "nombre": "WC_Morris"},
+      {"id": 13, "nombre": "Bella_Vista"},
+      {"id": 14, "nombre": "Muñiz"},
+      {"id": 15, "nombre": "San_Miguel"},
+      {"id": 16, "nombre": "JoseC_Paz"},
+      {"id": 17, "nombre": "Sol_y_Verde"},
+      {"id": 18, "nombre": "Pte_Derqui"},
+      {"id": 19, "nombre": "Villa_Astolf"},
+      {"id": 20, "nombre": "Pilar"},
+      {"id": 21, "nombre": "Manzanares"},
+      {"id": 22, "nombre": "Dr_Cabred"}
+    ]
+  }

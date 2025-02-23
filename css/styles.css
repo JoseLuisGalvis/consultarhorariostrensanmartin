@@ -1,0 +1,350 @@
+/* index.html */
+/* Estilos para el logo tipográfico */
+/* Estilos base */
+body {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.container-fluid {
+  padding: 0; /* Ajuste para que el header ocupe todo el ancho */
+}
+
+/* Header */
+.bg-consultar {
+  background-color: #007bff;
+  transition: background-color 0.3s ease; /* Suaviza el cambio en modo oscuro */
+}
+
+.current-time {
+  font-size: 1.2rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-family: "Arial", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.current-time:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.02);
+}
+
+.toggle-dark-mode {
+  width: 45px;
+  height: 45px;
+  border: none;
+  background-color: #fff;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-dark-mode:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.toggle-dark-mode i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  color: #333;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.toggle-dark-mode .sun-icon {
+  color: #ffd700; /* Amarillo por defecto */
+}
+
+.toggle-dark-mode .moon-icon {
+  color: #5c6bc0; /* Azul índigo por defecto */
+}
+
+/* Modo oscuro */
+body.dark-mode {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+body.dark-mode .bg-consultar {
+  background-color: #003087;
+  box-shadow: 0 4px 15px rgba(0, 48, 135, 0.3);
+}
+
+body.dark-mode .current-time {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .toggle-dark-mode {
+  background: #ffeb3b; /* Amarillo en modo oscuro */
+}
+
+body.dark-mode .toggle-dark-mode .sun-icon {
+  color: #000; /* Sol negro en modo oscuro */
+}
+
+body.dark-mode .card {
+  background-color: #333;
+  color: #fff;
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1); /* Box-shadow blanco en modo oscuro */
+}
+
+/* Logo tipográfico */
+.logo-text-animated {
+  /* Usado en index.html */
+  font-family: Arial, sans-serif;
+  font-size: 5rem;
+  font-weight: bold;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-text {
+  /* Usado en otras vistas si aplica */
+  font-family: Arial, sans-serif;
+  font-size: 3rem;
+  font-weight: bold;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-con {
+  color: #66b0ff;
+  -webkit-text-stroke: 4px #003087;
+}
+
+.logo-sul {
+  color: #fff;
+  -webkit-text-stroke: 4px #003087;
+}
+
+.logo-tar {
+  color: #ffeb3b;
+  -webkit-text-stroke: 4px #003087;
+}
+
+.logo-san-martin {
+  color: #003087;
+  font-size: 3rem !important; /* Prioridad para index.html */
+  width: 100%;
+  text-align: center;
+}
+
+body.dark-mode .logo-sul {
+  color: #ccc;
+}
+
+/* Estilos para el formulario y resultados */
+.home-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.card {
+  background-color: #fff;
+  color: #333;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Box-shadow base */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición para hover */
+}
+
+.card:hover {
+  transform: translateZ(20px); /* Elevación en eje Z al hacer hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al hover */
+}
+
+body.dark-mode .card:hover {
+  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2); /* Sombra blanca al hover en modo oscuro */
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+body.dark-mode .card-body.resultados-card {
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1); /* Box-shadow blanco para resultados */
+}
+
+.form-select,
+.form-control {
+  border-color: #007bff;
+}
+
+body.dark-mode .form-select,
+body.dark-mode .form-control {
+  background-color: #444;
+  color: #fff;
+  border-color: #66b0ff;
+}
+
+body.dark-mode .form-text {
+  color: #fff; /* Form-text blanco en modo oscuro */
+}
+
+.btn.bg-consultar {
+  position: relative;
+  overflow: hidden;
+  padding: 0.8rem 2.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  background-color: #007bff;
+  color: #fff;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.btn.bg-consultar:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+}
+
+.btn.bg-consultar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.btn.bg-consultar:hover::before {
+  left: 100%;
+}
+
+body.dark-mode .btn.bg-consultar {
+  background-color: #003087;
+}
+
+body.dark-mode .btn.bg-consultar:hover {
+  background-color: #00205b;
+}
+
+.overflow-auto {
+  scrollbar-width: thin;
+}
+
+.overflow-auto::-webkit-scrollbar {
+  width: 8px;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb {
+  background-color: #007bff;
+  border-radius: 4px;
+}
+
+body.dark-mode .overflow-auto::-webkit-scrollbar-thumb {
+  background-color: #66b0ff;
+}
+
+.alert-danger,
+.alert-info {
+  margin-top: 1rem;
+}
+
+.text-primary {
+  color: #007bff !important;
+}
+
+body.dark-mode .text-primary {
+  color: #66b0ff !important;
+}
+
+/* Ajustes para el grid */
+.row.g-4 {
+  margin-top: 1.5rem;
+}
+
+/* Estilos para tablet */
+@media (max-width: 768px) {
+  .logo-text-animated {
+    font-size: 3rem;
+  }
+
+  .logo-text {
+    font-size: 2.5rem;
+  }
+
+  .logo-san-martin {
+    font-size: 2rem !important;
+  }
+
+  .home-title {
+    font-size: 1.5rem;
+  }
+
+  .current-time {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .toggle-dark-mode {
+    width: 40px;
+    height: 40px;
+  }
+
+  .toggle-dark-mode i {
+    font-size: 1.2rem;
+  }
+
+  .btn.bg-consultar {
+    font-size: 1rem;
+    padding: 0.6rem 2rem;
+  }
+}
+
+/* Estilos para mobile */
+@media (max-width: 480px) {
+  .logo-text-animated {
+    font-size: 2rem;
+  }
+
+  .logo-text {
+    font-size: 1.8rem;
+  }
+
+  .logo-san-martin {
+    font-size: 1.5rem !important;
+  }
+
+  .home-title {
+    font-size: 1.2rem;
+  }
+
+  .current-time {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .toggle-dark-mode {
+    width: 35px;
+    height: 35px;
+  }
+
+  .toggle-dark-mode i {
+    font-size: 1rem;
+  }
+
+  .btn.bg-consultar {
+    font-size: 0.8rem;
+    padding: 0.5rem 1.8rem;
+  }
+}

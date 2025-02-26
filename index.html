@@ -28,20 +28,70 @@
   </head>
   <body>
     <div class="container-fluid d-flex flex-column min-vh-100 text-white">
-      <!-- Header -->
-      <header
-        class="d-flex justify-content-between align-items-center w-100 py-3 px-4 bg-consultar"
-      >
-        <span class="current-time">Hora: --:--:--</span>
-        <button
-          class="btn p-2 rounded-circle toggle-dark-mode"
-          aria-label="Activar modo oscuro"
-        >
-          <i class="fas fa-moon moon-icon"></i>
-          <i class="fas fa-sun sun-icon d-none"></i>
-        </button>
-      </header>
+      <!--  Navbar  -->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary p-2">
+        <div class="container-fluid">
+          <h3>
+            <i class="fas fa-train me-2 mx-2"></i>
+            <a
+              href="https://www.trensanmartin.com.ar/"
+              target="_blank"
+              class="train-title"
+              >Tren San Martín</a
+            >
+          </h3>
 
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mx-2">
+              <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="./html/contact.html">Contacto</a>
+              </li>
+            </ul>
+            <span class="current-time">Hora: --:--:--</span>
+            <div class="d-flex align-items-center">
+              <!-- Botón de Internacionalización -->
+              <div class="dropdown mx-4">
+                <ul class="dropdown-menu">
+                  <li>
+                    <button class="dropdown-item" data-lang="es">
+                      🇪🇸 Español
+                    </button>
+                  </li>
+                  <li>
+                    <button class="dropdown-item" data-lang="en">
+                      🇺🇸 English
+                    </button>
+                  </li>
+                </ul>
+                <button
+                  class="btn btn-outline-language dropdown-toggle"
+                  id="languageDropdown"
+                  data-bs-toggle="dropdown"
+                >
+                  Español
+                </button>
+              </div>
+              <!-- Botón de Modo Oscuro/Claro -->
+              <button class="btn btn-light me-2 toggle-dark-mode">
+                <i class="fas fa-moon moon-icon"></i>
+                <i class="fas fa-sun sun-icon d-none"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
       <!-- Main -->
       <main
         class="flex-grow-1 d-flex flex-column align-items-center justify-content-center text-center px-3"
@@ -73,7 +123,9 @@
             San Martín
           </div>
         </div>
-        <h2 class="my-4 home-title">Horarios de Servicio</h2>
+        <h2 class="my-4 home-title" data-aos="fade-up" data-aos-duration="3000">
+          Horarios de Servicio
+        </h2>
         <a href="./html/schedule.html" class="btn bg-consultar px-5"
           >Ir a la Consulta</a
         >
@@ -88,14 +140,6 @@
     ></script>
     <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        AOS.init({
-          duration: 3000, // Duración por defecto
-          once: false, // Repetir animaciones al volver a entrar en el viewport
-        });
-      });
-    </script>
     <script src="./js/script.js"></script>
   </body>
 </html>

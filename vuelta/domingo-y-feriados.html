@@ -28,39 +28,88 @@
   </head>
   <body>
     <div class="container-fluid d-flex flex-column min-vh-100 text-white">
-      <!-- Header -->
-      <header
-        class="d-flex justify-content-between align-items-center w-100 py-3 px-4 bg-consultar"
-      >
-        <div>
-          <span class="current-time">Hora: --:--:--</span>
-          <h5 class="m-0 d-inline ms-3">
-            Vuelta: Dr. Cabred → Retiro - Domingos y Feriados
-          </h5>
-        </div>
-        <div>
+      <!--  Navbar  -->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary p-2">
+        <div class="container-fluid">
+          <h3>
+            <i class="fas fa-train me-2 mx-2"></i>
+            <a
+              href="https://www.trensanmartin.com.ar/"
+              target="_blank"
+              class="train-title"
+              >Tren San Martín</a
+            >
+          </h3>
+
           <button
-            class="btn p-2 rounded-circle toggle-dark-mode me-3"
-            aria-label="Activar modo oscuro"
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
-            <i class="fas fa-moon moon-icon"></i>
-            <i class="fas fa-sun sun-icon d-none"></i>
+            <span class="navbar-toggler-icon"></span>
           </button>
-          <a
-            href="../html/schedule.html"
-            class="btn btn-outline-light"
-            aria-label="Volver al cronograma"
-            >Atrás</a
-          >
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mx-2">
+              <li class="nav-item">
+                <a class="nav-link" href="../index.html">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../html/contact.html">Contacto</a>
+              </li>
+            </ul>
+            <span class="current-time">Hora: --:--:--</span>
+            <div class="d-flex align-items-center">
+              <!-- Botón de Internacionalización -->
+              <div class="dropdown mx-2">
+                <ul class="dropdown-menu">
+                  <li>
+                    <button class="dropdown-item" data-lang="es">
+                      🇪🇸 Español
+                    </button>
+                  </li>
+                  <li>
+                    <button class="dropdown-item" data-lang="en">
+                      🇺🇸 English
+                    </button>
+                  </li>
+                </ul>
+                <button
+                  class="btn btn-outline-language dropdown-toggle"
+                  id="languageDropdown"
+                  data-bs-toggle="dropdown"
+                >
+                  Español
+                </button>
+              </div>
+              <!-- Botón de Modo Oscuro/Claro -->
+              <button class="btn btn-light me-2 toggle-dark-mode">
+                <i class="fas fa-moon moon-icon"></i>
+                <i class="fas fa-sun sun-icon d-none"></i>
+              </button>
+              <div>
+                <a
+                  href="../html/schedule.html"
+                  class="btn btn-outline-light btn-atras"
+                  aria-label="Volver al cronograma"
+                  >Atrás</a
+                >
+              </div>
+            </div>
+          </div>
         </div>
-      </header>
+      </nav>
 
       <!-- Main -->
       <main
-        class="flex-grow-1 d-flex align-items-center justify-content-center text-center px-3"
+        class="flex-grow-1 d-flex flex-column align-items-center justify-content-center text-center px-3"
       >
+        <h2 class="schedule-title">Vuelta: Domingo y Feriados</h2>
         <div class="container">
-          <div class="row g-4">
+          <div class="row">
             <!-- Publicidad Izquierda Superior -->
             <div class="col-12 col-md-4">
               <div
@@ -214,12 +263,6 @@
     <script src="../js/script.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        // Inicializar AOS
-        AOS.init({
-          duration: 3000,
-          once: false,
-        });
-
         const form = document.getElementById("horarios-form");
         const estacionSelect = document.getElementById("estacion");
         const horaInput = document.getElementById("hora");
@@ -227,25 +270,86 @@
         const resultadosDiv = document.getElementById("resultados");
         const errorDiv = document.getElementById("error-message");
         let horariosData = null;
+        let currentLang = localStorage.getItem("selectedLanguage") || "es";
+        let lastResultados = []; // Guardar los últimos resultados
 
-        // Cargar horarios desde JSON estático
+        // Traducciones
+        const translations = {
+          es: {
+            viewSchedules: "Ver horarios",
+            consulting: "Consultando...",
+            noSchedules:
+              "No se encontraron horarios disponibles para la hora seleccionada.",
+            selectValid:
+              "Por favor, selecciona una estación y una hora válidas.",
+            errorLoading:
+              "Error al cargar los horarios. Por favor, intente nuevamente.",
+            errorProcessing:
+              "Error al procesar los horarios. Por favor, intente nuevamente.",
+            train: "Tren",
+            departureTime: "Hora de salida",
+          },
+          en: {
+            viewSchedules: "View schedules",
+            consulting: "Consulting...",
+            noSchedules: "No schedules available for the selected time.",
+            selectValid: "Please select a valid station and time.",
+            errorLoading: "Error loading schedules. Please try again.",
+            errorProcessing: "Error processing schedules. Please try again.",
+            train: "Train",
+            departureTime: "Departure time",
+          },
+        };
+
+        // Función para obtener texto traducido
+        const t = (key) => translations[currentLang][key] || key;
+
+        // Función para renderizar resultados
+        const renderResultados = (resultados) => {
+          resultadosDiv.innerHTML = "";
+          if (resultados.length > 0) {
+            resultados.forEach((horario) => {
+              const div = document.createElement("div");
+              div.className = "card mb-2";
+              div.innerHTML = `
+                <div class="card-body py-2">
+                  <h5 class="card-subtitle mb-1">${t("train")} ${
+                horario.num_tren
+              }</h5>
+                  <p class="card-text m-0">${t("departureTime")}: ${
+                horario.hora_estacion
+              }</p>
+                </div>
+              `;
+              resultadosDiv.appendChild(div);
+            });
+          } else {
+            resultadosDiv.innerHTML = `<div class="alert alert-info" role="alert">${t(
+              "noSchedules"
+            )}</div>`;
+          }
+        };
+
+        // Establecer texto inicial del botón
+        submitBtn.textContent = t("viewSchedules");
+
+        // Cargar horarios desde JSON
         fetch("../assets/JSON/horarios/horarios_domingo_vuelta.json")
           .then((response) => {
-            if (!response.ok) throw new Error("Error al cargar los horarios");
+            if (!response.ok) throw new Error(t("errorLoading"));
             return response.json();
           })
           .then((data) => {
             horariosData = data;
             data.estaciones.forEach((estacion, index) => {
               const option = document.createElement("option");
-              option.value = index; // Usamos índice como valor
+              option.value = index;
               option.textContent = estacion;
               estacionSelect.appendChild(option);
             });
           })
           .catch((error) => {
-            errorDiv.textContent =
-              "Error al cargar los horarios. Por favor, intente nuevamente.";
+            errorDiv.textContent = t("errorLoading");
             errorDiv.classList.remove("d-none");
             console.error("Error fetching horarios:", error);
           });
@@ -257,14 +361,13 @@
           const selectedTime = horaInput.value;
 
           if (!horariosData || isNaN(selectedEstacionIdx) || !selectedTime) {
-            errorDiv.textContent =
-              "Por favor, selecciona una estación y una hora válidas.";
+            errorDiv.textContent = t("selectValid");
             errorDiv.classList.remove("d-none");
             return;
           }
 
           submitBtn.disabled = true;
-          submitBtn.textContent = "Consultando...";
+          submitBtn.textContent = t("consulting");
           errorDiv.classList.add("d-none");
           resultadosDiv.innerHTML =
             '<div class="text-center py-4"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Cargando...</span></div></div>';
@@ -274,7 +377,7 @@
               const [hours, minutes] = selectedTime.split(":").map(Number);
               const selectedMinutes = hours * 60 + minutes;
 
-              const resultados = horariosData.trenes
+              lastResultados = horariosData.trenes
                 .map((tren) => {
                   const horaEstacion = tren.horarios[selectedEstacionIdx];
                   if (!horaEstacion) return null;
@@ -290,36 +393,34 @@
                   const [hb, mb] = b.hora_estacion.split(":").map(Number);
                   return ha * 60 + ma - (hb * 60 + mb);
                 })
-                .slice(0, 5); // Limita a los próximos 5 trenes
+                .slice(0, 5);
 
-              resultadosDiv.innerHTML = "";
-              if (resultados.length > 0) {
-                resultados.forEach((horario) => {
-                  const div = document.createElement("div");
-                  div.className = "card mb-2";
-                  div.innerHTML = `
-                  <div class="card-body py-2">
-                    <h5 class="card-subtitle mb-1">Tren ${horario.num_tren}</h5>
-                    <p class="card-text m-0">Hora de salida: ${horario.hora_estacion}</p>
-                  </div>
-                `;
-                  resultadosDiv.appendChild(div);
-                });
-              } else {
-                resultadosDiv.innerHTML =
-                  '<div class="alert alert-info" role="alert">No se encontraron horarios disponibles para la hora seleccionada.</div>';
-              }
+              renderResultados(lastResultados);
             } catch (error) {
-              errorDiv.textContent =
-                "Error al procesar los horarios. Por favor, intente nuevamente.";
+              errorDiv.textContent = t("errorProcessing");
               errorDiv.classList.remove("d-none");
               console.error("Error procesando horarios:", error);
               resultadosDiv.innerHTML = "";
             } finally {
               submitBtn.disabled = false;
-              submitBtn.textContent = "Ver horarios";
+              submitBtn.textContent = t("viewSchedules");
             }
           }, 500); // Retraso simulado
+        });
+
+        // Sincronizar con el cambio de idioma desde script.js
+        document.querySelectorAll(".dropdown-item").forEach((item) => {
+          item.addEventListener("click", (e) => {
+            currentLang = e.target.getAttribute("data-lang");
+            console.log(
+              "Cambio de idioma en Vuelta Domingos y Feriados a:",
+              currentLang
+            );
+            submitBtn.textContent = t("viewSchedules");
+            if (lastResultados.length > 0) {
+              renderResultados(lastResultados); // Re-renderizar resultados
+            }
+          });
         });
       });
     </script>

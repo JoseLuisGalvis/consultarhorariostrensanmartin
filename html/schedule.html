@@ -28,32 +28,77 @@
   </head>
   <body>
     <div class="container-fluid d-flex flex-column min-vh-100 text-white">
-      <!-- Header -->
-      <header
-        class="d-flex justify-content-between align-items-center w-100 py-3 px-4 bg-consultar"
-      >
-        <div>
-          <span class="current-time">Hora: --:--:--</span>
-          <h3 class="m-0 d-inline ms-3">
-            Consultar - San Martín - Selector de Horarios
+      <!--  Navbar  -->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary p-2">
+        <div class="container-fluid">
+          <h3>
+            <i class="fas fa-train me-2 mx-2"></i>
+            <a
+              href="https://www.trensanmartin.com.ar/"
+              target="_blank"
+              class="train-title"
+              >Tren San Martín</a
+            >
           </h3>
-        </div>
-        <div>
+
           <button
-            class="btn p-2 rounded-circle toggle-dark-mode me-3"
-            aria-label="Activar modo oscuro"
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
-            <i class="fas fa-moon moon-icon"></i>
-            <i class="fas fa-sun sun-icon d-none"></i>
+            <span class="navbar-toggler-icon"></span>
           </button>
-          <a
-            href="../index.html"
-            class="btn btn-outline-light"
-            aria-label="Volver al Inicio"
-            >Atrás</a
-          >
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mx-2">
+              <li class="nav-item">
+                <a class="nav-link" href="../index.html">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../html/contact.html">Contacto</a>
+              </li>
+            </ul>
+            <span class="current-time">Hora: --:--:--</span>
+            <div class="d-flex align-items-center">
+              <!-- Botón de Internacionalización -->
+              <div class="dropdown mx-2">
+                <ul class="dropdown-menu">
+                  <li>
+                    <button class="dropdown-item" data-lang="es">
+                      🇪🇸 Español
+                    </button>
+                  </li>
+                  <li>
+                    <button class="dropdown-item" data-lang="en">
+                      🇺🇸 English
+                    </button>
+                  </li>
+                </ul>
+                <button
+                  class="btn btn-outline-language dropdown-toggle"
+                  id="languageDropdown"
+                  data-bs-toggle="dropdown"
+                >
+                  Español
+                </button>
+              </div>
+              <!-- Botón de Modo Oscuro/Claro -->
+              <button class="btn btn-light me-2 toggle-dark-mode">
+                <i class="fas fa-moon moon-icon"></i>
+                <i class="fas fa-sun sun-icon d-none"></i>
+              </button>
+              <div>
+                <a href="../index.html" class="btn btn-outline-light btn-atras"
+                  >Atrás</a
+                >
+              </div>
+            </div>
+          </div>
         </div>
-      </header>
+      </nav>
 
       <!-- Main -->
       <main
@@ -83,18 +128,22 @@
               <div
                 class="card h-100 d-flex align-items-center justify-content-center p-3"
               >
-                <h3 class="mb-4 text-primary">Ida: Retiro → Dr. Cabred</h3>
+                <h3 class="mb-4 text-primary ida-title">
+                  Ida: Retiro → Dr. Cabred
+                </h3>
                 <a
                   href="../ida/lunes-a-viernes.html"
-                  class="btn bg-consultar mb-3 w-100"
+                  class="btn bg-consultar mb-3 w-100 btn-ida-lv"
                   >Lunes a Viernes</a
                 >
-                <a href="../ida/sabado.html" class="btn bg-consultar mb-3 w-100"
+                <a
+                  href="../ida/sabado.html"
+                  class="btn bg-consultar mb-3 w-100 btn-ida-sab"
                   >Sábado</a
                 >
                 <a
                   href="../ida/domingo-y-feriados.html"
-                  class="btn bg-consultar mb-3 w-100"
+                  class="btn bg-consultar mb-3 w-100 btn-ida-dom"
                   >Domingo y Feriados</a
                 >
               </div>
@@ -139,20 +188,22 @@
               <div
                 class="card h-100 d-flex align-items-center justify-content-center p-3"
               >
-                <h3 class="mb-4 text-primary">Vuelta: Dr. Cabred → Retiro</h3>
+                <h3 class="mb-4 text-primary vuelta-title">
+                  Vuelta: Dr. Cabred → Retiro
+                </h3>
                 <a
                   href="../vuelta/lunes-a-viernes.html"
-                  class="btn bg-consultar mb-3 w-100"
+                  class="btn bg-consultar mb-3 w-100 btn-vuelta-lv"
                   >Lunes a Viernes</a
                 >
                 <a
                   href="../vuelta/sabado.html"
-                  class="btn bg-consultar mb-3 w-100"
+                  class="btn bg-consultar mb-3 w-100 btn-vuelta-sab"
                   >Sábado</a
                 >
                 <a
                   href="../vuelta/domingo-y-feriados.html"
-                  class="btn bg-consultar mb-3 w-100"
+                  class="btn bg-consultar mb-3 w-100 btn-vuelta-dom"
                   >Domingo y Feriados</a
                 >
               </div>
@@ -187,14 +238,6 @@
     ></script>
     <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        AOS.init({
-          duration: 3000, // Duración por defecto
-          once: false, // Repetir animaciones al volver a entrar en el viewport
-        });
-      });
-    </script>
     <script src="../js/script.js"></script>
   </body>
 </html>

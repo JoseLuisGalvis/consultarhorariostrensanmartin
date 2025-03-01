@@ -84,8 +84,9 @@ document.addEventListener("DOMContentLoaded", () => {
         "Por favor incluya el lugar que desea evaluemos para visitar o el mensaje con su aporte o sugerencia. Gracias!",
       send: "Enviar",
       backToHome: "Volver al Inicio",
-      shareSocial: "Comparte en Redes Sociales",
+      shareSocial: "Visita Nuestras Redes Sociales",
       share: "Compartir",
+      map: "Comercios Publicados",
     },
     en: {
       inicio: "Home",
@@ -127,14 +128,38 @@ document.addEventListener("DOMContentLoaded", () => {
         "Please include the place you would like us to evaluate for a visit or your message with your contribution or suggestion. Thank you!",
       send: "Send",
       backToHome: "Back to Home",
-      shareSocial: "Share on Social Media",
+      shareSocial: "Connect with Us on Social Media",
       share: "Share",
+      map: "Published Stores",
     },
   };
 
   // Elementos comunes
   const languageDropdownBtn = document.getElementById("languageDropdown");
   const navLinks = document.querySelectorAll(".nav-link");
+
+  // Detectar página actual y aplicar clase active
+  function setActiveNavLink() {
+    const currentPath = window.location.pathname;
+    navLinks.forEach((link) => {
+      const href = link.getAttribute("href");
+      // Normalizar href para compararlo con la ruta actual
+      const normalizedHref = href === "#" ? "/" : href.replace("../", "/");
+      const isActive =
+        (currentPath === "/" && normalizedHref === "/") || // Para index.html
+        currentPath.includes(normalizedHref);
+      if (isActive) {
+        link.classList.add("active");
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.classList.remove("active");
+        link.removeAttribute("aria-current");
+      }
+    });
+  }
+
+  // Llamar a la función al cargar la página
+  setActiveNavLink();
 
   // Elementos específicos de cada página
   const homeTitle = document.querySelector(".home-title"); // index.html
@@ -175,6 +200,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const backToHomeBtn = document.getElementById("backToHomeContact");
   const shareSocialText = document.querySelector(".social-share p");
   const shareButtons = document.querySelectorAll(".social-share .btn"); // Simplificado
+
+  // Elementos de map.html
+  const mapTitleElement = document.querySelector(".map-title"); // Simplificado
 
   // Definir updateLanguage
   function updateLanguage(lang) {
@@ -251,6 +279,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (shareButtons.length) {
       shareButtons.forEach((btn) => (btn.textContent = t.share));
     }
+
+    // Elementos de map.html
+    if (mapTitleElement) {
+      mapTitleElement.textContent = t.map;
+    }
   }
 
   // Configurar el cambio de idioma
@@ -269,23 +302,51 @@ document.addEventListener("DOMContentLoaded", () => {
   updateLanguage(savedLang);
 
   // Mejorar la transición del modo oscuro
+  // Configurar el modo oscuro
   const toggleButton = document.querySelector(".toggle-dark-mode");
   const moonIcon = document.querySelector(".moon-icon");
   const sunIcon = document.querySelector(".sun-icon");
 
+  // Función para aplicar el modo oscuro según el estado
+  function applyDarkMode(isDark) {
+    if (isDark) {
+      document.body.classList.add("dark-mode");
+      if (moonIcon && sunIcon) {
+        moonIcon.classList.add("d-none");
+        sunIcon.classList.remove("d-none");
+      }
+    } else {
+      document.body.classList.remove("dark-mode");
+      if (moonIcon && sunIcon) {
+        moonIcon.classList.remove("d-none");
+        sunIcon.classList.add("d-none");
+      }
+    }
+  }
+
+  // Cargar el estado del modo oscuro desde localStorage
+  const savedDarkMode = localStorage.getItem("darkMode");
+  const isDarkMode = savedDarkMode === null ? false : savedDarkMode === "true";
+  applyDarkMode(isDarkMode);
+
+  // Manejar el toggle del modo oscuro
   if (toggleButton && moonIcon && sunIcon) {
     toggleButton.addEventListener("click", () => {
+      const isCurrentlyDark = document.body.classList.contains("dark-mode");
+      const newDarkMode = !isCurrentlyDark;
+
+      // Aplicar transición
       document.body.style.transition =
         "background-color 0.5s ease, color 0.5s ease";
-      document.body.classList.toggle("dark-mode");
 
+      // Guardar el nuevo estado en localStorage
+      localStorage.setItem("darkMode", newDarkMode);
+      applyDarkMode(newDarkMode);
+
+      // Animación de íconos
       moonIcon.style.transform = "translate(-50%, -50%) rotate(180deg)";
       sunIcon.style.transform = "translate(-50%, -50%) rotate(180deg)";
-
       setTimeout(() => {
-        moonIcon.classList.toggle("d-none");
-        sunIcon.classList.toggle("d-none");
-
         moonIcon.style.transform = "translate(-50%, -50%) rotate(0deg)";
         sunIcon.style.transform = "translate(-50%, -50%) rotate(0deg)";
       }, 150);
@@ -343,4 +404,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Llamar a la función en la inicialización
   setupContactForm();
+
+  // Lista de sitios visitados (mismo array del componente original)
+  const visitedSites = [
+    {
+      position: [-34.59696569167834, -58.54140107245756],
+      name: "Av Rodríguez Peña, Sáenz Peña, Tres de Febrero",
+    },
+  ];
+
+  // Función para inicializar el mapa
+  function setupMap() {
+    const buenosAiresPosition = [-34.6037, -58.3816];
+    const map = L.map("leaflet-map", {
+      center: buenosAiresPosition,
+      zoom: 5,
+      scrollWheelZoom: false,
+    });
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+    // Crear ícono violeta personalizado
+    const violetIcon = new L.Icon({
+      iconUrl:
+        "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png",
+      shadowUrl:
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41],
+    });
+
+    // Agregar marcadores con el ícono violeta
+    visitedSites.forEach(({ position, name }) => {
+      L.marker(position, { icon: violetIcon }).addTo(map).bindPopup(name);
+    });
+
+    console.log("Mapa inicializado con ícono violeta (URL externa):", map);
+  }
+
+  setupMap();
 });

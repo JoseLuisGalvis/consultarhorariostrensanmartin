@@ -1,4 +1,4 @@
-/* index.html */
+/* styles.css */
 body {
   transition: background-color 0.3s, color 0.3s;
 }
@@ -36,6 +36,16 @@ body {
   text-decoration: underline; /* Subrayado */
   text-decoration-thickness: 3px; /* Grosor del subrayado */
 }
+
+/* Inicio Estilos para Active en el Navbar */
+.navbar-nav .nav-link.active {
+  color: #fff;
+  font-weight: 700;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+
+/* Fin Estilos para Active en el Navbar */
 
 .current-time:hover {
   background: rgba(255, 255, 255, 0.2);
@@ -406,16 +416,6 @@ form textarea:focus {
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-.btn.bg-consultar {
-  background-color: #007bff;
-  color: white;
-  transition: all 0.3s ease-in-out;
-}
-
-.btn.bg-consultar:hover {
-  background-color: #0056b3;
-  transform: scale(1.05);
-}
 @media (max-width: 768px) {
   .btn.bg-consultar {
     width: 100%;
@@ -425,8 +425,45 @@ form textarea:focus {
   }
 }
 
-.social-share .btn i {
-  display: inline-block !important;
-  font-size: 1rem !important;
-  color: #fff !important; /* Ajusta según el color deseado */
+/* Redes sociales */
+.social-icons {
+  display: flex;
+  gap: 1.25rem;
+  justify-content: center;
+}
+
+.social-icons a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-3px);
+}
+
+.social-icons i.bi {
+  color: #007bff;
+  font-size: 2rem;
+  transition: color 0.3s ease;
+}
+
+/* Modo oscuro - añadir si necesario */
+body.dark-mode .social-icons a:hover i.bi {
+  color: #fff;
+}
+
+.social-icons i.bi:hover {
+  color: #040e79;
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
 }

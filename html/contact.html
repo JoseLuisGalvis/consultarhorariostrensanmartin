@@ -32,7 +32,7 @@
   </head>
   <body>
     <div class="container-fluid d-flex flex-column min-vh-100 text-white">
-      <!-- Navbar -->
+      <!--  Navbar  -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary p-2">
         <div class="container-fluid">
           <h3>
@@ -44,6 +44,7 @@
               >Tren San Martín</a
             >
           </h3>
+
           <button
             class="navbar-toggler"
             type="button"
@@ -58,19 +59,28 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto mx-2">
               <li class="nav-item">
-                <a class="nav-link" href="../index.html">Inicio</a>
+                <a class="nav-link" href="../index.html" id="nav-inicio"
+                  >Inicio</a
+                >
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="../html/contact.html">Contacto</a>
+                <a class="nav-link" href="../html/clima.html" id="nav-clima"
+                  >Clima</a
+                >
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="../html/map.html">Mapa</a>
+                <a class="nav-link" href="../html/map.html" id="nav-mapa"
+                  >Mapa</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#" id="nav-contacto">Contacto</a>
               </li>
             </ul>
             <span class="current-time">Hora: --:--:--</span>
             <div class="d-flex align-items-center">
               <!-- Botón de Internacionalización -->
-              <div class="dropdown mx-2">
+              <div class="dropdown mx-4">
                 <ul class="dropdown-menu">
                   <li>
                     <button class="dropdown-item" data-lang="es">
@@ -96,11 +106,6 @@
                 <i class="fas fa-moon moon-icon"></i>
                 <i class="fas fa-sun sun-icon d-none"></i>
               </button>
-              <div>
-                <a href="../index.html" class="btn btn-outline-light btn-atras"
-                  >Atrás</a
-                >
-              </div>
             </div>
           </div>
         </div>
@@ -222,7 +227,7 @@
                     class="form-control"
                     rows="4"
                     required
-                    placeholder="Por favor ingrese su solicitud. Gracias!"
+                    placeholder="Por Favor Ingrese su Solicitud. Gracias!"
                   ></textarea>
                 </div>
 

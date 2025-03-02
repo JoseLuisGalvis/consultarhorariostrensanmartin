@@ -106,6 +106,10 @@ body.dark-mode .bg-consultar {
   box-shadow: 0 4px 15px rgba(0, 48, 135, 0.3);
 }
 
+body.dark-mode .copyright {
+  color: #ffffff !important;
+}
+
 body.dark-mode .current-time {
   background: rgba(0, 0, 0, 0.2);
 }
@@ -437,8 +441,8 @@ form textarea:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.05);
   transition: all 0.3s ease;
@@ -446,12 +450,12 @@ form textarea:focus {
 
 .social-icons a:hover {
   background-color: rgba(255, 255, 255, 0.1) !important;
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 }
 
 .social-icons i.bi {
   color: #007bff;
-  font-size: 2rem;
+  font-size: 1.5rem;
   transition: color 0.3s ease;
 }
 
@@ -464,6 +468,135 @@ body.dark-mode .social-icons a:hover i.bi {
   color: #040e79;
   background-color: rgba(255, 255, 255, 0.3) !important;
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
+}
+
+/* Estilos para la página de clima - Agregar a styles.css */
+
+/* Tarjetas de clima */
+.weather-detail {
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.weather-detail:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+.weather-detail i {
+  font-size: 1.2rem;
+  color: #007bff;
+  margin-bottom: 8px;
+}
+
+body.dark-mode .weather-detail i {
+  color: #66b0ff;
+}
+
+/* Tarjetas de pronóstico */
+.forecast-card {
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.forecast-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .forecast-card:hover {
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+}
+
+.forecast-day {
+  font-weight: bold;
+  font-size: 1.2rem;
+  background-color: #f8f9fa;
+  padding: 10px;
+  text-align: center;
+}
+
+body.dark-mode .forecast-day {
+  background-color: #333;
+}
+
+.forecast-icon {
+  text-align: center;
+  padding: 15px 0;
+}
+
+.forecast-icon i {
+  font-size: 3rem;
+  color: #007bff;
+}
+
+body.dark-mode .forecast-icon i {
+  color: #66b0ff;
+}
+
+.forecast-temp {
+  text-align: center;
+  padding: 10px;
+}
+
+.max-temp {
+  font-weight: bold;
+  color: #dc3545;
+}
+
+.min-temp {
+  color: #0d6efd;
+}
+
+body.dark-mode .max-temp {
+  color: #ff6b6b;
+}
+
+body.dark-mode .min-temp {
+  color: #66b0ff;
+}
+
+.forecast-desc {
+  text-align: center;
+  padding: 10px;
+  background-color: #f8f9fa;
+  font-style: italic;
+}
+
+body.dark-mode .forecast-desc {
+  background-color: #333;
+}
+
+/* Spinner de carga */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Alerta de recomendación */
+#clima-recomendacion {
+  transition: all 0.3s ease;
+}
+
+#clima-recomendacion:hover {
+  transform: scale(1.02);
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .weather-detail i {
+    font-size: 1.5rem;
+  }
+
+  .forecast-card {
+    margin-bottom: 15px;
+  }
 }

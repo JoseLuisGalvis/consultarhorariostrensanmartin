@@ -5,6 +5,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const savedLang = localStorage.getItem("selectedLanguage") || "es";
   console.log("Idioma cargado:", savedLang);
 
+  let allowRightClick = false; // Variable para controlar si se permite el clic derecho
+
+  // Escuchar el evento de teclado
+  // Evitar el clic derecho
+  document.addEventListener("contextmenu", function (e) {
+    e.preventDefault(); // Bloquear el menú contextual
+    alert("El clic derecho está deshabilitado en esta página.");
+  });
+
+  // Evitar combinaciones de teclas (Ctrl + U, Ctrl + Shift + I, F12, etc.)
+  document.addEventListener("keydown", function (e) {
+    // Bloquear Ctrl + U
+    if (e.ctrlKey && e.key === "u") {
+      e.preventDefault();
+      alert("La combinación Ctrl + U está deshabilitada.");
+    }
+    // Bloquear Ctrl + Shift + I y F12 (herramientas de desarrollo)
+    if ((e.ctrlKey && e.shiftKey && e.key === "I") || e.key === "F12") {
+      e.preventDefault();
+      alert("El acceso a las herramientas de desarrollo está deshabilitado.");
+    }
+  });
+
   // Inicializar AOS
   if (typeof AOS !== "undefined") {
     AOS.init({
@@ -24,11 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
       )}:${String(now.getMinutes()).padStart(2, "0")}:${String(
         now.getSeconds()
       ).padStart(2, "0")}`;
-
       if (timeElement.textContent !== newTime) {
         timeElement.style.transform = "scale(0.95)";
         timeElement.style.opacity = "0.8";
-
         setTimeout(() => {
           timeElement.textContent = newTime;
           timeElement.style.transform = "scale(1)";
@@ -45,6 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const translations = {
     es: {
       inicio: "Inicio",
+      clima: "Clima",
+      mapa: "Mapa",
       contacto: "Contacto",
       language: "Español",
       consulta: "Ir a la Consulta",
@@ -72,7 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
       availableSchedules: "Horarios Disponibles",
       selectStationAndTime:
         "Selecciona una estación y hora para ver los horarios disponibles",
-      // Nuevas traducciones para contact.html
       name: "Nombre",
       lastname: "Apellidos",
       email: "Correo Electrónico",
@@ -87,9 +109,46 @@ document.addEventListener("DOMContentLoaded", () => {
       shareSocial: "Visita Nuestras Redes Sociales",
       share: "Compartir",
       map: "Comercios Publicados",
+      // Nuevas traducciones para la sección Clima
+      weatherTitle: "Clima en la Línea San Martín",
+      selectStationTitle: "Selecciona una estación",
+      currentWeather: "Clima Actual",
+      humidity: "Humedad",
+      wind: "Viento",
+      pressure: "Presión",
+      visibility: "Visibilidad",
+      forecastTitle: "Pronóstico próximos días",
+      followUs: "Sigamos en contacto",
+      footer: "© 2025 Consultar San Martín - Todos los Derechos Reservados",
+      loading: "Cargando...",
+      gettingWeatherData: "Obteniendo datos del clima",
+      lastUpdate: "Última actualización",
+      // Nuevas traducciones para recomendaciones
+      weatherRecommendations: {
+        thunderstorms:
+          "Se esperan tormentas. Recomendamos llevar paraguas y evitar zonas abiertas.",
+        drizzle: "Llovizna ligera. Un impermeable o paraguas sería útil hoy.",
+        rain: "Lluvia prevista. Lleva paraguas o impermeable y verifica posibles demoras en el tren.",
+        snow: "Condiciones de nieve o aguanieve. Abrígate bien y verifica el servicio del tren.",
+        fog: "Reducida visibilidad por niebla/bruma. Presta atención a las señales y a tu entorno.",
+        clearHot:
+          "Día despejado y muy caluroso. Lleva agua, protector solar y usa ropa ligera.",
+        clearWarm:
+          "Día soleado y cálido. Recomendamos protector solar y mantenerte hidratado.",
+        clearCold: "Día despejado pero frío. Abrígate bien antes de salir.",
+        clearNice:
+          "Día despejado con temperatura agradable. ¡Perfecto para viajar en tren!",
+        fewClouds: "Algunas nubes, pero en general buen tiempo para viajar.",
+        partlyCloudy:
+          "Parcialmente nublado. Considera llevar un abrigo ligero.",
+        mostlyCloudy:
+          "Día mayormente nublado. Considera llevar un abrigo por si refresca.",
+      },
     },
     en: {
       inicio: "Home",
+      clima: "Weather",
+      mapa: "Map",
       contacto: "Contact",
       language: "English",
       consulta: "Go to the Query",
@@ -116,7 +175,6 @@ document.addEventListener("DOMContentLoaded", () => {
       availableSchedules: "Available Schedules",
       selectStationAndTime:
         "Select a station and time to view available schedules",
-      // Nuevas traducciones para contact.html
       name: "Name",
       lastname: "Last Name",
       email: "Email",
@@ -131,8 +189,44 @@ document.addEventListener("DOMContentLoaded", () => {
       shareSocial: "Connect with Us on Social Media",
       share: "Share",
       map: "Published Stores",
+      // Nuevas traducciones para la sección Clima
+      weatherTitle: "Weather on the San Martín Line",
+      selectStationTitle: "Select a Station",
+      currentWeather: "Current Weather",
+      humidity: "Humidity",
+      wind: "Wind",
+      pressure: "Pressure",
+      visibility: "Visibility",
+      forecastTitle: "Forecast for the Next Few Days",
+      followUs: "Stay in Touch",
+      footer: "© 2025 Consultar San Martín - All Rights Reserved",
+      loading: "Loading...",
+      gettingWeatherData: "Getting weather data",
+      lastUpdate: "Last update",
+      // Nuevas traducciones para recomendaciones
+      weatherRecommendations: {
+        thunderstorms:
+          "Thunderstorms expected. We recommend bringing an umbrella and avoiding open areas.",
+        drizzle: "Light drizzle. A raincoat or umbrella would be useful today.",
+        rain: "Rain expected. Bring an umbrella or raincoat and check for possible train delays.",
+        snow: "Snow or sleet conditions. Dress warmly and check the train service.",
+        fog: "Reduced visibility due to fog/mist. Pay attention to signs and your surroundings.",
+        clearHot:
+          "Clear and very hot day. Bring water, sunscreen, and wear light clothing.",
+        clearWarm:
+          "Sunny and warm day. We recommend sunscreen and staying hydrated.",
+        clearCold: "Clear but cold day. Dress warmly before heading out.",
+        clearNice:
+          "Clear day with pleasant temperature. Perfect for train travel!",
+        fewClouds: "Some clouds, but generally good weather for traveling.",
+        partlyCloudy: "Partly cloudy. Consider bringing a light jacket.",
+        mostlyCloudy:
+          "Mostly cloudy day. Consider bringing a jacket in case it gets chilly.",
+      },
     },
   };
+
+  window.translations = translations; // Hacer translations accesible globalmente
 
   // Elementos comunes
   const languageDropdownBtn = document.getElementById("languageDropdown");
@@ -143,10 +237,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentPath = window.location.pathname;
     navLinks.forEach((link) => {
       const href = link.getAttribute("href");
-      // Normalizar href para compararlo con la ruta actual
       const normalizedHref = href === "#" ? "/" : href.replace("../", "/");
       const isActive =
-        (currentPath === "/" && normalizedHref === "/") || // Para index.html
+        (currentPath === "/" && normalizedHref === "/") ||
         currentPath.includes(normalizedHref);
       if (isActive) {
         link.classList.add("active");
@@ -162,10 +255,10 @@ document.addEventListener("DOMContentLoaded", () => {
   setActiveNavLink();
 
   // Elementos específicos de cada página
-  const homeTitle = document.querySelector(".home-title"); // index.html
-  const consultaBtn = document.querySelector(".btn.bg-consultar"); // index.html y schedule.html
-  const idaTitle = document.querySelector(".ida-title"); // schedule.html
-  const vueltaTitle = document.querySelector(".vuelta-title"); // schedule.html
+  const homeTitle = document.querySelector(".home-title");
+  const consultaBtn = document.querySelector(".btn.bg-consultar");
+  const idaTitle = document.querySelector(".ida-title");
+  const vueltaTitle = document.querySelector(".vuelta-title");
   const btnIdaLv = document.querySelector(".btn-ida-lv");
   const btnIdaSab = document.querySelector(".btn-ida-sab");
   const btnIdaDom = document.querySelector(".btn-ida-dom");
@@ -174,19 +267,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnVueltaDom = document.querySelector(".btn-vuelta-dom");
   const btnAtras = document.querySelector(".btn-atras");
 
-  // Elementos de las páginas ida/ y vuelta/
-  const scheduleTitle = document.querySelector(".schedule-title"); // Título principal
-  const formTitle = document.querySelector(".card-body .card-title"); // "Selecciona los detalles"
-  const stationLabel = document.querySelector("label[for='estacion']"); // "Estación"
-  const stationSelect = document.querySelector("#estacion option[value='']"); // "Selecciona una estación"
-  const stationHelp = document.getElementById("estacionHelp"); // Texto de ayuda
-  const timeLabel = document.querySelector("label[for='hora']"); // "Hora"
-  const timeHelp = document.getElementById("horaHelp"); // Texto de ayuda
-  const submitBtn = document.getElementById("submit-btn"); // "Ver horarios"
-  const resultsTitle = document.querySelector(".resultados-card .card-title"); // "Horarios Disponibles"
-  const responseHelp = document.getElementById("responseHelp"); // Mensaje inicial
+  const scheduleTitle = document.querySelector(".schedule-title");
+  const formTitle = document.querySelector(".card-body .card-title");
+  const stationLabel = document.querySelector("label[for='estacion']");
+  const stationSelect = document.querySelector("#estacion option[value='']");
+  const stationHelp = document.getElementById("estacionHelp");
+  const timeLabel = document.querySelector("label[for='hora']");
+  const timeHelp = document.getElementById("horaHelp");
+  const submitBtn = document.getElementById("submit-btn");
+  const resultsTitle = document.querySelector(".resultados-card .card-title");
+  const responseHelp = document.getElementById("responseHelp");
 
-  // Elementos de contact.html
   const contactTitle = document.querySelector(".text-center-contact");
   const nameLabel = document.querySelector("label[for='from_name']");
   const lastnameLabel = document.querySelector("label[for='from_lastname']");
@@ -196,38 +287,37 @@ document.addEventListener("DOMContentLoaded", () => {
   const municipalityLabel = document.querySelector("label[for='municipality']");
   const messageLabel = document.querySelector("label[for='message']");
   const messageTextarea = document.querySelector("textarea[name='message']");
-  const sendBtn = document.querySelector("#contactForm .btn.bg-consultar"); // Corregido selector
+  const sendBtn = document.querySelector("#contactForm .btn.bg-consultar");
   const backToHomeBtn = document.getElementById("backToHomeContact");
   const shareSocialText = document.querySelector(".social-share p");
-  const shareButtons = document.querySelectorAll(".social-share .btn"); // Simplificado
+  const shareButtons = document.querySelectorAll(".social-share .btn");
 
-  // Elementos de map.html
-  const mapTitleElement = document.querySelector(".map-title"); // Simplificado
+  const mapTitleElement = document.querySelector(".map-title");
+
+  const weatherTitle = document.querySelector(".weather-title");
 
   // Definir updateLanguage
   function updateLanguage(lang) {
     const t = translations[lang];
 
     // Elementos comunes
-    if (navLinks.length) {
-      navLinks[0].textContent = t.inicio;
-      navLinks[1].textContent = t.contacto;
-    }
+    const navInicio = document.getElementById("nav-inicio");
+    const navClima = document.getElementById("nav-clima");
+    const navMapa = document.getElementById("nav-mapa");
+    const navContacto = document.getElementById("nav-contacto");
+
+    if (navInicio) navInicio.textContent = t.inicio;
+    if (navClima) navClima.textContent = t.clima;
+    if (navMapa) navMapa.textContent = t.mapa;
+    if (navContacto) navContacto.textContent = t.contacto;
+
     if (languageDropdownBtn) {
       languageDropdownBtn.textContent = t.language;
     }
-    if (homeTitle) {
-      homeTitle.textContent = t.title;
-    }
-    if (consultaBtn) {
-      consultaBtn.textContent = t.consulta;
-    }
-    if (idaTitle) {
-      idaTitle.textContent = t.ida;
-    }
-    if (vueltaTitle) {
-      vueltaTitle.textContent = t.vuelta;
-    }
+    if (homeTitle) homeTitle.textContent = t.title;
+    if (consultaBtn) consultaBtn.textContent = t.consulta;
+    if (idaTitle) idaTitle.textContent = t.ida;
+    if (vueltaTitle) vueltaTitle.textContent = t.vuelta;
     if (btnIdaLv) btnIdaLv.textContent = t.lunesViernes;
     if (btnIdaSab) btnIdaSab.textContent = t.sabado;
     if (btnIdaDom) btnIdaDom.textContent = t.domingoFeriados;
@@ -236,22 +326,20 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnVueltaDom) btnVueltaDom.textContent = t.domingoFeriados;
     if (btnAtras) btnAtras.textContent = t.atras;
 
-    // Elementos de las páginas ida/ y vuelta/
     if (scheduleTitle) {
       const path = window.location.pathname;
-      if (path.includes("ida/lunes-a-viernes")) {
+      if (path.includes("ida/lunes-a-viernes"))
         scheduleTitle.textContent = t.idaLunesViernes;
-      } else if (path.includes("ida/sabado")) {
+      else if (path.includes("ida/sabado"))
         scheduleTitle.textContent = t.idaSabado;
-      } else if (path.includes("ida/domingo-y-feriados")) {
+      else if (path.includes("ida/domingo-y-feriados"))
         scheduleTitle.textContent = t.idaDomingoFeriados;
-      } else if (path.includes("vuelta/lunes-a-viernes")) {
+      else if (path.includes("vuelta/lunes-a-viernes"))
         scheduleTitle.textContent = t.vueltaLunesViernes;
-      } else if (path.includes("vuelta/sabado")) {
+      else if (path.includes("vuelta/sabado"))
         scheduleTitle.textContent = t.vueltaSabado;
-      } else if (path.includes("vuelta/domingo-y-feriados")) {
+      else if (path.includes("vuelta/domingo-y-feriados"))
         scheduleTitle.textContent = t.vueltaDomingoFeriados;
-      }
     }
     if (formTitle) formTitle.textContent = t.selectDetails;
     if (stationLabel) stationLabel.textContent = t.station;
@@ -263,7 +351,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (resultsTitle) resultsTitle.textContent = t.availableSchedules;
     if (responseHelp) responseHelp.textContent = t.selectStationAndTime;
 
-    // Elementos de contact.html
     if (contactTitle) contactTitle.textContent = t.contacto;
     if (nameLabel) nameLabel.textContent = t.name;
     if (lastnameLabel) lastnameLabel.textContent = t.lastname;
@@ -276,16 +363,76 @@ document.addEventListener("DOMContentLoaded", () => {
     if (sendBtn) sendBtn.textContent = t.send;
     if (backToHomeBtn) backToHomeBtn.textContent = t.backToHome;
     if (shareSocialText) shareSocialText.textContent = t.shareSocial;
-    if (shareButtons.length) {
+    if (shareButtons.length)
       shareButtons.forEach((btn) => (btn.textContent = t.share));
+
+    if (mapTitleElement) mapTitleElement.textContent = t.map;
+    if (weatherTitle && window.location.pathname.includes("clima")) {
+      weatherTitle.textContent = t.weatherTitle;
     }
 
-    // Elementos de map.html
-    if (mapTitleElement) {
-      mapTitleElement.textContent = t.map;
-    }
+    // Nuevos elementos para la sección Clima (con verificaciones)
+    const selectStationTitle = document.querySelector(".card-title"); // Título del selector de estaciones
+    const climaActualElement = document.querySelector("#clima-actual");
+    const currentWeatherTitle = climaActualElement
+      ? climaActualElement.parentElement.querySelector(".card-title")
+      : null;
+    const humedadElement = document.querySelector("#humedad");
+    const humidityLabel = humedadElement
+      ? humedadElement.previousElementSibling.previousElementSibling
+      : null;
+    const vientoElement = document.querySelector("#viento");
+    const windLabel = vientoElement
+      ? vientoElement.previousElementSibling.previousElementSibling
+      : null;
+    const presionElement = document.querySelector("#presion");
+    const pressureLabel = presionElement
+      ? presionElement.previousElementSibling.previousElementSibling
+      : null;
+    const visibilidadElement = document.querySelector("#visibilidad");
+    const visibilityLabel = visibilidadElement
+      ? visibilidadElement.previousElementSibling.previousElementSibling
+      : null;
+    const pronosticoContainerElement = document.querySelector(
+      "#pronostico-container"
+    );
+    const forecastTitle = pronosticoContainerElement
+      ? pronosticoContainerElement.parentElement.querySelector(".card-title")
+      : null;
+    const socialIconsElement = document.querySelector(".social-icons");
+    const followUsTitle = socialIconsElement
+      ? socialIconsElement.previousElementSibling
+      : null;
+    const footerText = document.querySelector("footer .container p");
+
+    if (selectStationTitle)
+      selectStationTitle.textContent = t.selectStationTitle;
+    if (currentWeatherTitle) currentWeatherTitle.textContent = t.currentWeather;
+    if (humidityLabel) humidityLabel.textContent = t.humidity;
+    if (windLabel) windLabel.textContent = t.wind;
+    if (pressureLabel) pressureLabel.textContent = t.pressure;
+    if (visibilityLabel) visibilityLabel.textContent = t.visibility;
+    if (forecastTitle) forecastTitle.textContent = t.forecastTitle;
+    if (followUsTitle) followUsTitle.textContent = t.followUs;
+    if (footerText) footerText.textContent = t.footer;
+
+    // Actualizar textos dinámicos iniciales (como "Cargando...")
+    const temperaturaEl = document.getElementById("temperatura");
+    const descripcionClimaEl = document.getElementById("descripcion-clima");
+    const recomendacionEl = document.getElementById("recomendacion-texto");
+    if (temperaturaEl && temperaturaEl.textContent === "Cargando...")
+      temperaturaEl.textContent = t.loading;
+    if (
+      descripcionClimaEl &&
+      descripcionClimaEl.textContent === "Obteniendo datos del clima"
+    )
+      descripcionClimaEl.textContent = t.gettingWeatherData;
+    if (
+      recomendacionEl &&
+      recomendacionEl.textContent === "Cargando recomendaciones..."
+    )
+      recomendacionEl.textContent = t.loading;
   }
-
   // Configurar el cambio de idioma
   if (languageDropdownBtn) {
     document.querySelectorAll(".dropdown-item").forEach((item) => {
@@ -294,20 +441,27 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Idioma seleccionado:", lang);
         localStorage.setItem("selectedLanguage", lang);
         updateLanguage(lang);
+        // Actualizar la recomendación si estamos en la página de clima
+        if (
+          window.location.pathname.includes("clima") &&
+          typeof window.updateRecommendation === "function"
+        ) {
+          window.updateRecommendation();
+        }
       });
     });
   }
 
+  // Elimina el bloque duplicado al final del archivo
+
   // Aplicar el idioma guardado al cargar la página
   updateLanguage(savedLang);
 
-  // Mejorar la transición del modo oscuro
   // Configurar el modo oscuro
   const toggleButton = document.querySelector(".toggle-dark-mode");
   const moonIcon = document.querySelector(".moon-icon");
   const sunIcon = document.querySelector(".sun-icon");
 
-  // Función para aplicar el modo oscuro según el estado
   function applyDarkMode(isDark) {
     if (isDark) {
       document.body.classList.add("dark-mode");
@@ -324,26 +478,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Cargar el estado del modo oscuro desde localStorage
   const savedDarkMode = localStorage.getItem("darkMode");
   const isDarkMode = savedDarkMode === null ? false : savedDarkMode === "true";
   applyDarkMode(isDarkMode);
 
-  // Manejar el toggle del modo oscuro
   if (toggleButton && moonIcon && sunIcon) {
     toggleButton.addEventListener("click", () => {
       const isCurrentlyDark = document.body.classList.contains("dark-mode");
       const newDarkMode = !isCurrentlyDark;
-
-      // Aplicar transición
       document.body.style.transition =
         "background-color 0.5s ease, color 0.5s ease";
-
-      // Guardar el nuevo estado en localStorage
       localStorage.setItem("darkMode", newDarkMode);
       applyDarkMode(newDarkMode);
-
-      // Animación de íconos
       moonIcon.style.transform = "translate(-50%, -50%) rotate(180deg)";
       sunIcon.style.transform = "translate(-50%, -50%) rotate(180deg)";
       setTimeout(() => {
@@ -359,16 +505,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if (form) {
       form.addEventListener("submit", (e) => {
         e.preventDefault();
-        emailjs
-          .sendForm("service_wmjz6ab", "template_gsd9qm4", form)
-          .then(() => {
+        emailjs.sendForm("service_wmjz6ab", "template_gsd9qm4", form).then(
+          () => {
             alert("Mensaje enviado correctamente ✅");
             form.reset();
-          })
-          .catch((error) => {
+          },
+          (error) => {
             alert("Error al enviar el mensaje ❌");
             console.error(error);
-          });
+          }
+        );
       });
     }
 
@@ -402,10 +548,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Llamar a la función en la inicialización
   setupContactForm();
 
-  // Lista de sitios visitados (mismo array del componente original)
+  // Lista de sitios visitados
   const visitedSites = [
     {
       position: [-34.59696569167834, -58.54140107245756],
@@ -427,7 +572,6 @@ document.addEventListener("DOMContentLoaded", () => {
         '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
-    // Crear ícono violeta personalizado
     const violetIcon = new L.Icon({
       iconUrl:
         "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png",
@@ -439,7 +583,6 @@ document.addEventListener("DOMContentLoaded", () => {
       shadowSize: [41, 41],
     });
 
-    // Agregar marcadores con el ícono violeta
     visitedSites.forEach(({ position, name }) => {
       L.marker(position, { icon: violetIcon }).addTo(map).bindPopup(name);
     });

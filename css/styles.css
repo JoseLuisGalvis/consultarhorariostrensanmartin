@@ -188,6 +188,16 @@ body.dark-mode .logo-sul {
   color: #0707f5;
 }
 
+/* Logo */
+
+.img-logo {
+  width: 30%;
+}
+
+body.dark-mode .img-logo {
+  background-color: #fff;
+}
+
 /* Estilos para el formulario y resultados */
 
 .schedule-title {
